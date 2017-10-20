@@ -1,5 +1,5 @@
 //
-//  SoundSetNavBar.swift
+//  UploadSoundSetNavBar.swift
 //  Project
 //
 //  Created by Miguel Chavez on 9/2/17.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-extension SoundSetController {
+extension UploadSoundSetController {
     func setupNavigationBar() {
         hideKeyboardWhenTappedAround()
-        self.navigationItem.title = "Sound Sets"
+        self.navigationItem.title = "Upload Sound Sets"
         
         let textAttributes = [NSForegroundColorAttributeName:UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -20,11 +20,9 @@ extension SoundSetController {
         
         let searchButton = UIBarButtonItem(image: UIImage(named: "search")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
         
-        let moreButton = UIBarButtonItem(image: UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addMore))
-        
         let menuButton = UIBarButtonItem(image: UIImage(named: "menu")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(launchMenu))
         
-        navigationItem.rightBarButtonItems = [moreButton, searchButton]
+        navigationItem.rightBarButtonItem =  searchButton
         navigationItem.leftBarButtonItem = menuButton
         
         let navBar = navigationController?.navigationBar
@@ -45,12 +43,6 @@ extension SoundSetController {
         }
         
         collectionView?.reloadData()
-    }
-    
-    func addMore() {
-        let soundSet = SoundSet(ssID: "-1", dictionary: [String : Any]())
-        filteredSoundSets.insert(soundSet, at: 0)
-        self.collectionView?.reloadData()
     }
     
     func launchMenu() {

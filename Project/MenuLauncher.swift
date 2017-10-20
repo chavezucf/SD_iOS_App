@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-import UIKit
+import Firebase
 
 class MenuSelection: NSObject {
     let name: String
@@ -22,7 +21,12 @@ class MenuSelection: NSObject {
 }
 
 class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
-    
+    var user: User? {
+        didSet{
+            print("NAME" + (user?.name)!)
+            print("USERNAME" + (user?.userName)!)
+        }
+    }
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -35,7 +39,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     let cellId = "cellId"
     
     let menuSelctions: [MenuSelection] = {
-        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Settings", imageName: "settings"), MenuSelection(name: "Log off", imageName: "logoff")]
+        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Log off", imageName: "logoff")]
     }()
     
     
@@ -113,8 +117,9 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
                 }
                 else if(indexPath.item == 1)
                 {
-                    let myController = DownloadSongController()
-                    navController = UINavigationController(rootViewController: myController)
+                    let layout = UICollectionViewFlowLayout()
+                    let myUploadSoundSetController = UploadSoundSetController(collectionViewLayout: layout)
+                    navController = UINavigationController(rootViewController: myUploadSoundSetController)
                 }
                 else if(indexPath.item == 2)
                 {
@@ -156,8 +161,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: indexPath) as! MenuHeader
-        
-        
+        header.name = user?.name
         return header
     }
     

@@ -9,6 +9,12 @@
 import UIKit
 class MenuHeader: UICollectionViewCell {
     
+    var name: String? {
+        didSet{
+            usernameLabel.text = name;
+            
+        }
+    }
     let textLabel: UILabel = {
         let label = UILabel()
         label.text = "Walcome"
