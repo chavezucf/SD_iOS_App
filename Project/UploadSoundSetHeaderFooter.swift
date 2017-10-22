@@ -5,7 +5,7 @@
 //  Created by Miguel Chavez on 4/19/17.
 //  Copyright © 2017 Miguel Chavez. All rights reserved.
 //
-
+/*
 import UIKit
 
 class SoundSetHeader: UICollectionViewCell {
@@ -40,4 +40,4 @@ class SoundSetFooter: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
+}*/

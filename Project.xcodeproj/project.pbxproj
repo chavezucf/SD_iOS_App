@@ -24,12 +24,17 @@
 		CF3E17211F5AE0460029D93E /* SoundSetNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3E17201F5AE0460029D93E /* SoundSetNavBar.swift */; };
 		CF3E17231F5AE3DB0029D93E /* SoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3E17221F5AE3DB0029D93E /* SoundModel.swift */; };
 		CF3E17251F5C20720029D93E /* SelectSoundNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3E17241F5C20720029D93E /* SelectSoundNavBar.swift */; };
+		CF4E1CC51F9A7E5200BFA54C /* UploadSoundSetDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E1CC41F9A7E5200BFA54C /* UploadSoundSetDetailsController.swift */; };
+		CF4E1CC71F9A7F0B00BFA54C /* UploadSoundSetDetailNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E1CC61F9A7F0B00BFA54C /* UploadSoundSetDetailNavBar.swift */; };
+		CF4E1CC91F9A826900BFA54C /* UploadSoundSetDetailsHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E1CC81F9A826900BFA54C /* UploadSoundSetDetailsHeaderFooter.swift */; };
 		CF7799D41F3F54DA00161450 /* EditSoundSetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7799D31F3F54DA00161450 /* EditSoundSetController.swift */; };
 		CF7799D81F3F54E500161450 /* EditSoundSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7799D51F3F54E500161450 /* EditSoundSetCell.swift */; };
 		CF7799DA1F3F54E500161450 /* EditSoundSetHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7799D71F3F54E500161450 /* EditSoundSetHeaderFooter.swift */; };
 		CF783DA11F9A427E000B71F2 /* UploadSoundSetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF783DA01F9A427D000B71F2 /* UploadSoundSetController.swift */; };
 		CF783DA31F9A4395000B71F2 /* UploadSoundSetNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF783DA21F9A4394000B71F2 /* UploadSoundSetNavBar.swift */; };
-		CF9F37461F71D73F003C5C9C /* EditDoundSetNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F37451F71D73F003C5C9C /* EditDoundSetNavBar.swift */; };
+		CF8809231F9BAE7800D6B23B /* SettingsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8809221F9BAE7800D6B23B /* SettingsListController.swift */; };
+		CF8809251F9BAEE900D6B23B /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8809241F9BAEE900D6B23B /* SettingCell.swift */; };
+		CF9F37461F71D73F003C5C9C /* EditSoundSetNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9F37451F71D73F003C5C9C /* EditSoundSetNavBar.swift */; };
 		CFABDED81F375E65007E43C6 /* MenuLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFABDED71F375E65007E43C6 /* MenuLauncher.swift */; };
 		CFABDEDA1F3770F0007E43C6 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFABDED91F3770F0007E43C6 /* MenuCell.swift */; };
 		CFABDEDC1F3776F9007E43C6 /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFABDEDB1F3776F9007E43C6 /* MenuHeader.swift */; };
@@ -42,7 +47,6 @@
 		CFBDB5161F48AA1D002E992C /* SelectSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDB5141F48AA1D002E992C /* SelectSoundCell.swift */; };
 		CFBDB5171F48AA1D002E992C /* SelectSoundHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDB5151F48AA1D002E992C /* SelectSoundHeaderFooter.swift */; };
 		CFBDB5391F54DED7002E992C /* Drum1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CFBDB5381F54DED7002E992C /* Drum1.mp3 */; };
-		CFCDF4A41F281628000870E6 /* SoundSetHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCDF4A31F281628000870E6 /* SoundSetHeaderFooter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,12 +71,17 @@
 		CF3E17201F5AE0460029D93E /* SoundSetNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSetNavBar.swift; sourceTree = "<group>"; };
 		CF3E17221F5AE3DB0029D93E /* SoundModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundModel.swift; sourceTree = "<group>"; };
 		CF3E17241F5C20720029D93E /* SelectSoundNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSoundNavBar.swift; sourceTree = "<group>"; };
+		CF4E1CC41F9A7E5200BFA54C /* UploadSoundSetDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadSoundSetDetailsController.swift; sourceTree = "<group>"; };
+		CF4E1CC61F9A7F0B00BFA54C /* UploadSoundSetDetailNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadSoundSetDetailNavBar.swift; sourceTree = "<group>"; };
+		CF4E1CC81F9A826900BFA54C /* UploadSoundSetDetailsHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadSoundSetDetailsHeaderFooter.swift; sourceTree = "<group>"; };
 		CF7799D31F3F54DA00161450 /* EditSoundSetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSoundSetController.swift; sourceTree = "<group>"; };
 		CF7799D51F3F54E500161450 /* EditSoundSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSoundSetCell.swift; sourceTree = "<group>"; };
 		CF7799D71F3F54E500161450 /* EditSoundSetHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSoundSetHeaderFooter.swift; sourceTree = "<group>"; };
 		CF783DA01F9A427D000B71F2 /* UploadSoundSetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadSoundSetController.swift; sourceTree = "<group>"; };
 		CF783DA21F9A4394000B71F2 /* UploadSoundSetNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadSoundSetNavBar.swift; sourceTree = "<group>"; };
-		CF9F37451F71D73F003C5C9C /* EditDoundSetNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDoundSetNavBar.swift; sourceTree = "<group>"; };
+		CF8809221F9BAE7800D6B23B /* SettingsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListController.swift; sourceTree = "<group>"; };
+		CF8809241F9BAEE900D6B23B /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		CF9F37451F71D73F003C5C9C /* EditSoundSetNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSoundSetNavBar.swift; sourceTree = "<group>"; };
 		CFABDED71F375E65007E43C6 /* MenuLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLauncher.swift; sourceTree = "<group>"; };
 		CFABDED91F3770F0007E43C6 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		CFABDEDB1F3776F9007E43C6 /* MenuHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
@@ -85,7 +94,6 @@
 		CFBDB5141F48AA1D002E992C /* SelectSoundCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSoundCell.swift; sourceTree = "<group>"; };
 		CFBDB5151F48AA1D002E992C /* SelectSoundHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSoundHeaderFooter.swift; sourceTree = "<group>"; };
 		CFBDB5381F54DED7002E992C /* Drum1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Drum1.mp3; sourceTree = "<group>"; };
-		CFCDF4A31F281628000870E6 /* SoundSetHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSetHeaderFooter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,20 +205,40 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		CF4E1CC31F9A7DC700BFA54C /* TestUploadSoundSetDetails */ = {
+			isa = PBXGroup;
+			children = (
+				CF4E1CC41F9A7E5200BFA54C /* UploadSoundSetDetailsController.swift */,
+				CF4E1CC61F9A7F0B00BFA54C /* UploadSoundSetDetailNavBar.swift */,
+				CF4E1CC81F9A826900BFA54C /* UploadSoundSetDetailsHeaderFooter.swift */,
+			);
+			name = TestUploadSoundSetDetails;
+			sourceTree = "<group>";
+		};
 		CF7799C41F3F48D500161450 /* TestEditSoundSet */ = {
 			isa = PBXGroup;
 			children = (
 				CF7799D31F3F54DA00161450 /* EditSoundSetController.swift */,
 				CF7799D51F3F54E500161450 /* EditSoundSetCell.swift */,
 				CF7799D71F3F54E500161450 /* EditSoundSetHeaderFooter.swift */,
-				CF9F37451F71D73F003C5C9C /* EditDoundSetNavBar.swift */,
+				CF9F37451F71D73F003C5C9C /* EditSoundSetNavBar.swift */,
 			);
 			name = TestEditSoundSet;
+			sourceTree = "<group>";
+		};
+		CF8809211F9BAE5F00D6B23B /* TestSetting */ = {
+			isa = PBXGroup;
+			children = (
+				CF8809221F9BAE7800D6B23B /* SettingsListController.swift */,
+				CF8809241F9BAEE900D6B23B /* SettingCell.swift */,
+			);
+			name = TestSetting;
 			sourceTree = "<group>";
 		};
 		CFABDED51F375E0E007E43C6 /* TestUI */ = {
 			isa = PBXGroup;
 			children = (
+				CF8809211F9BAE5F00D6B23B /* TestSetting */,
 				CF0FA1BB1F1A7DD0003AD8DE /* Login */,
 				CFCDF49B1F281423000870E6 /* TestUploadSoundSet */,
 				CFCDF49A1F2813ED000870E6 /* TestSoundSet */,
@@ -257,7 +285,6 @@
 				CF3E171D1F5ADFF40029D93E /* Models */,
 				CFABDEDD1F37C29E007E43C6 /* SoundSetController.swift */,
 				CFABDEDF1F37C687007E43C6 /* SoundSetCell.swift */,
-				CFCDF4A31F281628000870E6 /* SoundSetHeaderFooter.swift */,
 				CF3E17201F5AE0460029D93E /* SoundSetNavBar.swift */,
 				CF7799C41F3F48D500161450 /* TestEditSoundSet */,
 				CFBDB5131F48A7F3002E992C /* TestSelectSound */,
@@ -270,6 +297,7 @@
 			children = (
 				CF783DA01F9A427D000B71F2 /* UploadSoundSetController.swift */,
 				CF783DA21F9A4394000B71F2 /* UploadSoundSetNavBar.swift */,
+				CF4E1CC31F9A7DC700BFA54C /* TestUploadSoundSetDetails */,
 			);
 			name = TestUploadSoundSet;
 			sourceTree = "<group>";
@@ -400,10 +428,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF8809251F9BAEE900D6B23B /* SettingCell.swift in Sources */,
 				CFABDEDA1F3770F0007E43C6 /* MenuCell.swift in Sources */,
 				CF7799D41F3F54DA00161450 /* EditSoundSetController.swift in Sources */,
 				CF0FA1BD1F1A7E51003AD8DE /* SignUpController.swift in Sources */,
 				CF783DA31F9A4395000B71F2 /* UploadSoundSetNavBar.swift in Sources */,
+				CF4E1CC71F9A7F0B00BFA54C /* UploadSoundSetDetailNavBar.swift in Sources */,
 				CFBDB5171F48AA1D002E992C /* SelectSoundHeaderFooter.swift in Sources */,
 				CF205CF51F2E257000ADA7BC /* DownloadSongController.swift in Sources */,
 				CFABDEDC1F3776F9007E43C6 /* MenuHeader.swift in Sources */,
@@ -419,12 +449,14 @@
 				CFBDB5161F48AA1D002E992C /* SelectSoundCell.swift in Sources */,
 				CF783DA11F9A427E000B71F2 /* UploadSoundSetController.swift in Sources */,
 				CFBDB50C1F488CA3002E992C /* PresentationAnimator.swift in Sources */,
-				CFCDF4A41F281628000870E6 /* SoundSetHeaderFooter.swift in Sources */,
+				CF8809231F9BAE7800D6B23B /* SettingsListController.swift in Sources */,
 				CF7799DA1F3F54E500161450 /* EditSoundSetHeaderFooter.swift in Sources */,
 				CFABDED81F375E65007E43C6 /* MenuLauncher.swift in Sources */,
 				CFABDEE01F37C687007E43C6 /* SoundSetCell.swift in Sources */,
-				CF9F37461F71D73F003C5C9C /* EditDoundSetNavBar.swift in Sources */,
+				CF4E1CC51F9A7E5200BFA54C /* UploadSoundSetDetailsController.swift in Sources */,
+				CF9F37461F71D73F003C5C9C /* EditSoundSetNavBar.swift in Sources */,
 				CFABDEDE1F37C29E007E43C6 /* SoundSetController.swift in Sources */,
+				CF4E1CC91F9A826900BFA54C /* UploadSoundSetDetailsHeaderFooter.swift in Sources */,
 				CFBDB5121F48A7ED002E992C /* SelectSoundController.swift in Sources */,
 				CF3E17251F5C20720029D93E /* SelectSoundNavBar.swift in Sources */,
 				CF0FA1A51F1A6C18003AD8DE /* AppDelegate.swift in Sources */,
@@ -555,7 +587,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2BSD3K249X;
 				INFOPLIST_FILE = Project/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miguelchavezucf.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -570,7 +602,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2BSD3K249X;
 				INFOPLIST_FILE = Project/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miguelchavezucf.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";

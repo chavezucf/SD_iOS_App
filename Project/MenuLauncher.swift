@@ -23,8 +23,6 @@ class MenuSelection: NSObject {
 class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     var user: User? {
         didSet{
-            print("NAME" + (user?.name)!)
-            print("USERNAME" + (user?.userName)!)
         }
     }
     let blackView = UIView()
@@ -39,7 +37,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     let cellId = "cellId"
     
     let menuSelctions: [MenuSelection] = {
-        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Log off", imageName: "logoff")]
+        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Settings", imageName: "gear"), MenuSelection(name: "Test Bluetooth", imageName: "logoff")]
     }()
     
     
@@ -123,8 +121,18 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
                 }
                 else if(indexPath.item == 2)
                 {
-                    let myController = TestBluetoothController()
-                    navController = UINavigationController(rootViewController: myController)
+                    let layout = UICollectionViewFlowLayout()
+                    let mySettingListController = SettingListController(collectionViewLayout: layout)
+                    navController = UINavigationController(rootViewController: mySettingListController)
+                    /*
+                     let myController = TestBluetoothController()
+                     navController = UINavigationController(rootViewController: myController)
+                     */
+                }
+                else if(indexPath.item == 3)
+                {
+                     let myController = TestBluetoothController()
+                     navController = UINavigationController(rootViewController: myController)
                 }
              
                 rootViewController.present(navController, animated: true, completion: {

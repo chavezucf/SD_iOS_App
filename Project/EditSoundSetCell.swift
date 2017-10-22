@@ -12,6 +12,15 @@ import Firebase
 
 class EditSoundSetCell: UICollectionViewCell {
     var index: Int?
+    var showNext: Bool? {
+        didSet {
+            if(showNext!) {
+                self.nextImageView.image = #imageLiteral(resourceName: "next")
+            } else {
+                self.nextImageView.image = UIImage()
+            }
+        }
+    }
     var soundName: String? {
         didSet{
             let attributedText = NSMutableAttributedString(string: "Channel \(index!):", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)])
@@ -73,10 +82,9 @@ class EditSoundSetCell: UICollectionViewCell {
         super.init(frame: frame)
         
         backgroundColor = UIColor(white: 1, alpha: 0.5)
-        
-        
         addSubview(nextImageView)
         nextImageView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 10, paddingBottom: 20, paddingRight: 20, widthConstant: 20, heightConstant: 20)
+        
         
         addSubview(playButton)
         playButton.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, widthConstant: 30, heightConstant: 30)
