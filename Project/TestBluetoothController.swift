@@ -14,13 +14,17 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     
     var centralManager:CBCentralManager!
     var peripheral:CBPeripheral!
+    var characteristic:CBCharacteristic!
     var bluetoothOn:Bool!
+    let ourUUIDs: [CBUUID] = [CBUUID(string: "FFE0")]
+    let serviceUUID = CBUUID(string: "FFE0")
+    let characteristicUUID = CBUUID(string: "FFE1")
     
     
     let scanButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .yellow
-        button.setTitle("Scan", for: .normal)
+        button.setTitle("Set", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 40
         button.layer.masksToBounds = true
@@ -47,6 +51,17 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         button.layer.cornerRadius = 40
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(Off), for: .touchUpInside)
+        return button
+    }()
+    
+    let soundButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .orange
+        button.setTitle("Sound", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 40
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(sound), for: .touchUpInside)
         return button
     }()
     
@@ -138,7 +153,7 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     
     fileprivate func setupTestButtons(){
         
-        let stackView = UIStackView(arrangedSubviews: [scanButton, onButton,offButton])
+        let stackView = UIStackView(arrangedSubviews: [scanButton, onButton,offButton, soundButton])
         view.addSubview(stackView)
         
         stackView.distribution = .fillEqually
@@ -150,11 +165,59 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     
     func On(sender: UIButton) {
         addToLog("on")
+        
+        let value = "H"
+        let data = value.data(using: String.Encoding.utf8)
+        
+        peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
 
     }
     
     func Off(sender: UIButton) {
         addToLog("off")
+        
+        let value:String = "L"
+        let data = value.data(using: String.Encoding.utf8)
+        
+        peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+    }
+    
+    func sound(sender: UIButton) {
+        addToLog("sound")
+        let uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
+        var imageURL = ""
+    FIRDatabase.database().reference().child("users").child(uid).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+        
+        imageURL = String(describing: snapshot.value!)
+        self.addToLog(imageURL)
+        
+        guard let url = URL(string: imageURL) else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            if let err = err {
+                print("Failed to fetch post image:", err)
+                return
+            }
+            guard let imageData = data else { return }
+            let photoImage = UIImage(data: imageData)
+            print(imageData)
+            
+            self.peripheral.writeValue(imageData, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+            
+            DispatchQueue.main.async {
+                self.moduleImageView.image = photoImage
+            }
+        }.resume()
+        
+        }) { (err) in
+        print("Failed to fetch user", err)
+        }
+        
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, response, error)
+            }.resume()
     }
     
     func startScan(sender: UIButton) {
@@ -162,29 +225,57 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             addToLog("Bluetooth is Off")
             return
         }
-        self.centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
+        self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
         addToLog("Scan")
     }
     
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print("centralManager")
-        addToLog("Test")
+        addToLog("RSSI: " + String(describing: RSSI))
+        addToLog("advertisementData: " + String(describing: advertisementData["name"]))
+        print(advertisementData.count)
+        self.peripheral = peripheral
+        
+        self.centralManager.connect(peripheral, options: nil)
         
     }
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        print("Fail")
+        addToLog("Fail! :(")
     }
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        addToLog("Connected!")
         
-        print("Connect")
+        peripheral.delegate = self
+        peripheral.discoverServices(nil)
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+        if((error) != nil){
+            addToLog(String(describing: error))
+        }
+        for service in peripheral.services! {
+            let thisService = service as CBService
+            addToLog(String(describing: thisService))
+            if service.uuid == serviceUUID {
+                peripheral.discoverCharacteristics(nil,for: thisService)
+            }
+        }
     }
     
-    func peripheral( peripheral: CBPeripheral, didDiscoverCharacteristicsForService service:CBService,
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service:CBService,
                      error: Error?) {
+        if((error) != nil){
+            addToLog(String(describing: error))
+        }
+        for characteristic in service.characteristics! {
+            let thisCharacteristic = characteristic as CBCharacteristic
+            addToLog(String(describing: thisCharacteristic))
+            if characteristic.uuid == characteristicUUID {
+                addToLog("WE ARE HERE!")
+                self.characteristic = thisCharacteristic
+                //set up notifications
+            }
+        }
     }
 
     
