@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import CoreBluetooth
 
+import Foundation
+
 class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var centralManager:CBCentralManager!
@@ -61,7 +63,7 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 40
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(sound), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sound2), for: .touchUpInside)
         return button
     }()
     
@@ -199,8 +201,6 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             }
             guard let imageData = data else { return }
             let photoImage = UIImage(data: imageData)
-            print(imageData)
-            
             self.peripheral.writeValue(imageData, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
             
             DispatchQueue.main.async {
@@ -211,6 +211,14 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         }) { (err) in
         print("Failed to fetch user", err)
         }
+        
+    }
+    
+    func sound2() {
+        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/sd-project-d3893.appspot.com/o/music%2Fone.wav?alt=media&token=30db2cfb-7488-4fdc-8596-1dfa1106ea9a")!
+        let task = DownloadManager.shared.activate().downloadTask(with: url)
+        task.resume()
+        let test = FileHandle.init(forReadingAtPath: "file:///private/var/mobile/Containers/Data/Application/AA1628A4-7FA9-45AC-888C-C7A343967028/Library/Caches/com.apple.nsurlsessiond/Downloads/com.miguelchavezucf.Project/CFNetworkDownload_VAzicV.tmp")
         
     }
     
