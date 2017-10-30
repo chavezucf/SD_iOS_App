@@ -59,7 +59,7 @@ class EditSoundSetCell: UICollectionViewCell {
     var player: AVPlayer?
     
     @IBAction func play(sender: UIButton)  {
-        let uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
+        var uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
         guard let sid = self.sid else {return}
         FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -75,6 +75,23 @@ class EditSoundSetCell: UICollectionViewCell {
         }) { (err) in
             print("Failed to fetch user", err)
         }
+        
+        uid = "UV6wmc4v6LQ96YoBpHZIJeMQUzD3"
+        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let musicURL = String(describing: snapshot.value!)
+            print(musicURL)
+            if let url = URL(string: musicURL) {
+                let player = AVPlayer(url: url)
+                player.play()
+                print("Playing")
+                self.playerLayer = AVPlayerLayer(player: player)
+            }
+            
+        }) { (err) in
+            print("Failed to fetch user", err)
+        }
+        
     }
     
   

@@ -32,6 +32,9 @@ extension UploadSoundSetDeatilsController{
     
     func handleSend() {
         print("BLUETOOTH")
+        print(sounds?.count)
+        print(mainUser!.soundsDictionary[sounds?["sound1"] as! String] as? String ?? dbUser!.soundsDictionary[sounds?["sound1"] as! String] as? String ?? "Select a Sound")
+        
     }
     
 }

@@ -63,7 +63,7 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 40
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(sound2), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sound), for: .touchUpInside)
         return button
     }()
     
@@ -167,59 +167,72 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     
     func On(sender: UIButton) {
         addToLog("on")
-        
-        let value = "H"
+        let value:String = "H"
         let data = value.data(using: String.Encoding.utf8)
-        
         peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
-
     }
     
     func Off(sender: UIButton) {
         addToLog("off")
-        
         let value:String = "L"
         let data = value.data(using: String.Encoding.utf8)
-        
         peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
     }
     
     func sound(sender: UIButton) {
-        addToLog("sound")
-        let uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
-        var imageURL = ""
-    FIRDatabase.database().reference().child("users").child(uid).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-        
-        imageURL = String(describing: snapshot.value!)
-        self.addToLog(imageURL)
-        
-        guard let url = URL(string: imageURL) else { return }
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            if let err = err {
-                print("Failed to fetch post image:", err)
-                return
-            }
-            guard let imageData = data else { return }
-            let photoImage = UIImage(data: imageData)
-            self.peripheral.writeValue(imageData, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
-            
-            DispatchQueue.main.async {
-                self.moduleImageView.image = photoImage
-            }
-        }.resume()
-        
-        }) { (err) in
-        print("Failed to fetch user", err)
-        }
-        
+        let value:String = "3\n"
+        let data = value.data(using: String.Encoding.utf8)
+        self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+        write(sound: "sound1", uid:"MgaK3AHac7PYSasKUpJuaUJKdgl1", sid: "-KwQlItbXWsYqMoXCg1M")
+        write(sound: "sound2", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Kxw-VcxaYMhyCNKRitl")
+        write(sound: "sound3", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mis-PoxaYKucCNKRMil")
     }
-    
-    func sound2() {
-        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/sd-project-d3893.appspot.com/o/music%2Fone.wav?alt=media&token=30db2cfb-7488-4fdc-8596-1dfa1106ea9a")!
-        let task = DownloadManager.shared.activate().downloadTask(with: url)
-        task.resume()
-        let test = FileHandle.init(forReadingAtPath: "file:///private/var/mobile/Containers/Data/Application/AA1628A4-7FA9-45AC-888C-C7A343967028/Library/Caches/com.apple.nsurlsessiond/Downloads/com.miguelchavezucf.Project/CFNetworkDownload_VAzicV.tmp")
+    func write(sound:String, uid:String, sid:String) {
+        addToLog(sound)
+        let uid = uid
+        let sid = sid
+        var soundUrl: String = ""
         
+        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            soundUrl = String(describing: snapshot.value!)
+            self.addToLog(soundUrl)
+            
+            guard let url = URL(string: soundUrl) else { return }
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                if let err = err {
+                    print("Failed to fetch sound:", err)
+                    return
+                }
+                guard let soundData = data else { return }
+                
+                soundData.withUnsafeBytes { (u8Ptr: UnsafePointer<UInt8>) in
+                    let mutRawPointer = UnsafeMutableRawPointer(mutating: u8Ptr)
+                    let totalSize = soundData.count
+                    var offset = 0
+                    
+                    while offset < totalSize {
+                        
+                        let chunkSize = 30
+                        let chunk = Data(bytesNoCopy: mutRawPointer+offset, count: chunkSize, deallocator: Data.Deallocator.none)
+                        self.peripheral.writeValue(chunk, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                        offset += chunkSize
+                    }
+                    
+                }
+                
+                let value = "\n"
+                let data = value.data(using: String.Encoding.utf8)
+                self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                print("done")
+                DispatchQueue.main.async {
+                }
+            }.resume()
+                
+                self.addToLog("done")
+            }) { (err) in
+                print("Failed to fetch user", err)
+        }
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
