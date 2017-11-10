@@ -180,14 +180,20 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     }
     
     func sound(sender: UIButton) {
-        let value:String = "3\n"
+        let value:String = "8\n"
         let data = value.data(using: String.Encoding.utf8)
         self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
-        write(sound: "sound1", uid:"MgaK3AHac7PYSasKUpJuaUJKdgl1", sid: "-KwQlItbXWsYqMoXCg1M")
-        write(sound: "sound2", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Kxw-VcxaYMhyCNKRitl")
-        write(sound: "sound3", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mis-PoxaYKucCNKRMil")
+        write(sound: "0\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mop-PoxaMcurCNKXSyt")//Boing
+        write(sound: "1\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mis-PoxaYKucCNKRMil")//Blurp
+        write(sound: "2\n", uid:"MgaK3AHac7PYSasKUpJuaUJKdgl1", sid: "-KwQlItbXWsYqMoXCg1M")//Bloop
+        write(sound: "3\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mop-PoxaMcurCNKXSyt")//Boing
+        write(sound: "4\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mis-PoxaYKucCNKRMil")//Blurp
+        write(sound: "5\n", uid:"MgaK3AHac7PYSasKUpJuaUJKdgl1", sid: "-KwQlItbXWsYqMoXCg1M")//Bloop
+        write(sound: "6\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mop-PoxaMcurCNKXSyt")//Boing
+        write(sound: "7\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Kxw-VcxaYMhyCNKRitl")//Chomp
     }
     func write(sound:String, uid:String, sid:String) {
+        
         addToLog(sound)
         let uid = uid
         let sid = sid
@@ -206,6 +212,10 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                 }
                 guard let soundData = data else { return }
                 
+                var value:String = sound
+                var data = value.data(using: String.Encoding.utf8)
+                self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                
                 soundData.withUnsafeBytes { (u8Ptr: UnsafePointer<UInt8>) in
                     let mutRawPointer = UnsafeMutableRawPointer(mutating: u8Ptr)
                     let totalSize = soundData.count
@@ -213,16 +223,16 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                     
                     while offset < totalSize {
                         
-                        let chunkSize = 30
+                        let chunkSize = 90
                         let chunk = Data(bytesNoCopy: mutRawPointer+offset, count: chunkSize, deallocator: Data.Deallocator.none)
                         self.peripheral.writeValue(chunk, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                         offset += chunkSize
                     }
-                    
                 }
                 
-                let value = "\n"
-                let data = value.data(using: String.Encoding.utf8)
+                value = "\n"
+                data = value.data(using: String.Encoding.utf8)
+                self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                 self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                 print("done")
                 DispatchQueue.main.async {
