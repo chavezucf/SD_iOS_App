@@ -38,11 +38,13 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.8)
+  - lottie-ios (1.0.4)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
+  - lottie-ios
 
 SPEC CHECKSUMS:
   Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
@@ -54,7 +56,8 @@ SPEC CHECKSUMS:
   FirebaseStorage: 63628572a5fde258f8e933b5fb42697468da0158
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  lottie-ios: 8b2c5ba38105430a72f03ce54be90d8dac950161
 
-PODFILE CHECKSUM: 7ee2bc0751a5d66e1f34837edc889cca3496c7ec
+PODFILE CHECKSUM: 320046b446a3d418b4a58368f9fe7010806b372c
 
 COCOAPODS: 1.2.0
