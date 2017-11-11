@@ -37,7 +37,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     let cellId = "cellId"
     
     let menuSelctions: [MenuSelection] = {
-        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Settings", imageName: "gear"), MenuSelection(name: "Test Bluetooth", imageName: "logoff")]
+        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Settings", imageName: "gearBlack"), MenuSelection(name: "Test Bluetooth", imageName: "logoff")]
     }()
     
     

@@ -27,7 +27,7 @@ class SettingCell: UICollectionViewCell {
     
     let settingsImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage()
+        imageView.image = #imageLiteral(resourceName: "gearBlack")
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
@@ -40,7 +40,7 @@ class SettingCell: UICollectionViewCell {
         backgroundColor = UIColor(white: 1, alpha: 0.5)
         
         addSubview(settingsImageView)
-        settingsImageView.anchor(top: topAnchor, left: self.leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 20, paddingBottom: 20, paddingRight: 10, widthConstant: 20, heightConstant: 20)
+        settingsImageView.anchor(top: topAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, widthConstant: 30, heightConstant: 30)
         
         addSubview(nameLabel)
         nameLabel.anchor(top: self.topAnchor, left: settingsImageView.rightAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 0)

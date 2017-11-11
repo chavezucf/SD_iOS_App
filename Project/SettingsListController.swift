@@ -21,7 +21,7 @@ class SettingListController: UICollectionViewController, UICollectionViewDelegat
     var settings: [Settings] = {
         
         
-        let Name = Settings(type: "Name", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))
+        let Name = Settings(type: "Name", UserInput: "", typeImage: #imageLiteral(resourceName: "user"))
         let UserName = Settings(type: "UserName", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))
         let PhoneNum = Settings(type: "Phone Number", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))
         let Email = Settings(type: "Email", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))

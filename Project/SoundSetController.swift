@@ -34,12 +34,19 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
         
         collectionView?.register(SoundSetCell.self, forCellWithReuseIdentifier: cellID)
         
+        collectionView?.backgroundColor = UIColor(patternImage: UIImage(named: "wood2")!)
+        collectionView?.alwaysBounceVertical = true
+        setupNavigationBar()
+        
+        
         if FIRAuth.auth()?.currentUser == nil {
             //show if not logged in
             DispatchQueue.main.async {
                 let loginController = LoginController()
                 let navController = UINavigationController(rootViewController: loginController)
                 self.present(navController, animated: true, completion: nil)
+                
+                loginController.soundSetController = self
             }
             
             return

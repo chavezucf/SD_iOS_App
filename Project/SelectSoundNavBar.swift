@@ -16,9 +16,9 @@ extension SelectSoundController{
         navBar?.isTranslucent = false
         navBar?.tintColor = UIColor.black
         
-        let searchButton = UIBarButtonItem(image: UIImage(named: "search")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
+        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
         
-        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
+        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back-1").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
         
         navigationItem.leftBarButtonItem = backButton
         

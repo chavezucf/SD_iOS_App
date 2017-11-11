@@ -18,11 +18,11 @@ extension SoundSetController {
         
         self.navigationController?.navigationBar.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
         
-        let searchButton = UIBarButtonItem(image: UIImage(named: "search")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
+        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
         
-        let moreButton = UIBarButtonItem(image: UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addMore))
+        let moreButton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addMore))
         
-        let menuButton = UIBarButtonItem(image: UIImage(named: "menu")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(launchMenu))
+        let menuButton = UIBarButtonItem(image: #imageLiteral(resourceName: "menu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(launchMenu))
         
         navigationItem.rightBarButtonItems = [moreButton, searchButton]
         navigationItem.leftBarButtonItem = menuButton

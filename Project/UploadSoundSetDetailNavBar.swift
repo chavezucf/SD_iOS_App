@@ -16,7 +16,7 @@ extension UploadSoundSetDeatilsController{
         navBar?.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
         navBar?.isTranslucent = false
         navBar?.tintColor = UIColor.black
-        let sendButton = UIBarButtonItem(image:  #imageLiteral(resourceName: "check").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSend))
+        let sendButton = UIBarButtonItem(image:  #imageLiteral(resourceName: "Send").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSend))
         navigationItem.rightBarButtonItem = sendButton
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "SoundSetMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))

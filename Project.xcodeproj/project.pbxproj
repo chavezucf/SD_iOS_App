@@ -240,8 +240,8 @@
 			children = (
 				CF8809211F9BAE5F00D6B23B /* TestSetting */,
 				CF0FA1BB1F1A7DD0003AD8DE /* Login */,
-				CFCDF49B1F281423000870E6 /* TestUploadSoundSet */,
 				CFCDF49A1F2813ED000870E6 /* TestSoundSet */,
+				CFCDF49B1F281423000870E6 /* TestUploadSoundSet */,
 				CFABDED61F375E3E007E43C6 /* Test Menu */,
 			);
 			name = TestUI;

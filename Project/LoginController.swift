@@ -12,6 +12,8 @@ import Firebase
 
 class LoginController: UIViewController {
     
+    var soundSetController: SoundSetController?
+    
     let logoContainerView: UIView = {
         let view = UIView()
         
@@ -82,6 +84,10 @@ class LoginController: UIViewController {
             print("it worked" , user?.uid ?? "")
             
             self.dismiss(animated: true, completion: nil)
+            
+            self.soundSetController!.fetchUser()
+            self.soundSetController!.fetchDBUser()
+            self.soundSetController!.fetchUserSoundSets()
             
         })
     }

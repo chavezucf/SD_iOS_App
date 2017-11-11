@@ -27,7 +27,7 @@ class MenuCell: UICollectionViewCell {
     
     let menuImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "gear")
+        imageView.image = #imageLiteral(resourceName: "gearBlack")
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true

@@ -16,13 +16,14 @@ extension EditSoundSetController{
         navBar?.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
         navBar?.isTranslucent = false
         navBar?.tintColor = UIColor.black
+        
+        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "SoundSetMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
+        let deleteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDelete))
+        navigationItem.leftBarButtonItems = [backButton, deleteButton]
+        
         let addButton = UIBarButtonItem(image: #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAdd))
         let subButton = UIBarButtonItem(image: #imageLiteral(resourceName: "minus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSub))
         navigationItem.rightBarButtonItems = [addButton, subButton]
-        
-        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "SoundSetMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
-        let deleteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "minus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDelete))
-        navigationItem.leftBarButtonItems = [backButton, deleteButton]
         
         navigationItem.title = "Sound Set"
         
