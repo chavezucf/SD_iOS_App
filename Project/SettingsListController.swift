@@ -22,9 +22,9 @@ class SettingListController: UICollectionViewController, UICollectionViewDelegat
         
         
         let Name = Settings(type: "Name", UserInput: "", typeImage: #imageLiteral(resourceName: "user"))
-        let UserName = Settings(type: "UserName", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))
-        let PhoneNum = Settings(type: "Phone Number", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))
-        let Email = Settings(type: "Email", UserInput: "", typeImage: #imageLiteral(resourceName: "next"))
+        let UserName = Settings(type: "UserName", UserInput: "", typeImage: #imageLiteral(resourceName: "music"))
+        let PhoneNum = Settings(type: "Phone Number", UserInput: "", typeImage: #imageLiteral(resourceName: "phone"))
+        let Email = Settings(type: "Email", UserInput: "", typeImage: #imageLiteral(resourceName: "email"))
         
         return [Name,UserName,PhoneNum,Email]
     }()
@@ -61,11 +61,20 @@ class SettingListController: UICollectionViewController, UICollectionViewDelegat
             
             do {
                 try FIRAuth.auth()?.signOut()
-                
-                //change UiViews
-                let loginController = LoginController()
-                let navController = UINavigationController(rootViewController: loginController)
-                self.present(navController, animated: true, completion: nil)
+                if let window = UIApplication.shared.keyWindow {
+                    //change UiViews
+                    guard let rootViewController = window.rootViewController else {
+                        return
+                    }
+                    let layout = UICollectionViewFlowLayout()
+                    let soundSetController = SoundSetController(collectionViewLayout: layout)
+                    let navController = UINavigationController(rootViewController: soundSetController)
+                    soundSetController.viewDidLoad()
+                    rootViewController.present(navController, animated: true, completion: {
+                        window.rootViewController = navController
+                        
+                    })
+                }
                 
             } catch let signOutErr {
                 print("Failed to signout", signOutErr)

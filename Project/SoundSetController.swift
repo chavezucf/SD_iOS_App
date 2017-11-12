@@ -43,10 +43,9 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
             //show if not logged in
             DispatchQueue.main.async {
                 let loginController = LoginController()
+                loginController.soundSetController = self
                 let navController = UINavigationController(rootViewController: loginController)
                 self.present(navController, animated: true, completion: nil)
-                
-                loginController.soundSetController = self
             }
             
             return

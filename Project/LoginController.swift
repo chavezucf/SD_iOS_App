@@ -84,10 +84,7 @@ class LoginController: UIViewController {
             print("it worked" , user?.uid ?? "")
             
             self.dismiss(animated: true, completion: nil)
-            
-            self.soundSetController!.fetchUser()
-            self.soundSetController!.fetchDBUser()
-            self.soundSetController!.fetchUserSoundSets()
+            self.soundSetController!.viewDidLoad()
             
         })
     }

@@ -40,9 +40,10 @@ class SettingCell: UICollectionViewCell {
         backgroundColor = UIColor(white: 1, alpha: 0.5)
         
         addSubview(settingsImageView)
-        settingsImageView.anchor(top: topAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, widthConstant: 30, heightConstant: 30)
-        
         addSubview(nameLabel)
+        settingsImageView.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 0, widthConstant: 40, heightConstant: 40)
+        
+        
         nameLabel.anchor(top: self.topAnchor, left: settingsImageView.rightAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 0)
         nameLabel.anchorCenterYToSuperview()
         
