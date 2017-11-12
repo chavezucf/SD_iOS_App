@@ -9,9 +9,9 @@
 import UIKit
 class MenuHeader: UICollectionViewCell {
     
-    var name: String? {
+    var userName: String? {
         didSet{
-            usernameLabel.text = name;
+            usernameLabel.text = userName;
             
         }
     }

@@ -29,7 +29,7 @@ class SelectSoundCell: UICollectionViewCell {
     
     let checkImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "check")
+        imageView.image = #imageLiteral(resourceName: "select")
         imageView.isHidden = true
         return imageView
     }()

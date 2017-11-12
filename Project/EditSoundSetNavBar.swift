@@ -21,7 +21,7 @@ extension EditSoundSetController{
         let deleteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDelete))
         navigationItem.leftBarButtonItems = [backButton, deleteButton]
         
-        let addButton = UIBarButtonItem(image: #imageLiteral(resourceName: "add").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAdd))
+        let addButton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAdd))
         let subButton = UIBarButtonItem(image: #imageLiteral(resourceName: "minus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSub))
         navigationItem.rightBarButtonItems = [addButton, subButton]
         

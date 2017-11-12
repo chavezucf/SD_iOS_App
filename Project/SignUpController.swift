@@ -59,23 +59,6 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         return tf
     }()
     
-    
-    
-    func handleTextInputChange() {
-        let isFormVaild = emailTextField.text?.characters.count ?? 0 > 0 &&
-            usernameTextField.text?.characters.count ?? 0 > 0 &&
-            passwordTextField.text?.characters.count ?? 0 > 0
-        
-        if isFormVaild {
-            signUpButton.backgroundColor = UIColor.rbg(red: 44, green: 95, blue: 255)
-            signUpButton.isEnabled = true
-        }
-        else {
-            signUpButton.backgroundColor = UIColor.rbg(red: 149, green: 204, blue: 244)
-            signUpButton.isEnabled = false
-        }
-    }
-    
     let usernameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Username"
@@ -88,7 +71,18 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     let nameTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Username"
+        tf.placeholder = "Name"
+        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.borderStyle = .roundedRect
+        tf.font = UIFont.systemFont(ofSize: 14)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        return tf
+    }()
+    
+    let phoneTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Phone Number"
+        tf.keyboardType = .phonePad
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
@@ -106,6 +100,23 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
+    
+    func handleTextInputChange() {
+        let isFormVaild = emailTextField.text?.characters.count ?? 0 > 0 &&
+            usernameTextField.text?.characters.count ?? 0 > 0 &&
+            nameTextField.text?.characters.count ?? 0 > 0 &&
+            phoneTextField.text?.characters.count ?? 0 > 0 &&
+            passwordTextField.text?.characters.count ?? 0 > 0
+        
+        if isFormVaild {
+            signUpButton.backgroundColor = UIColor.rbg(red: 44, green: 95, blue: 255)
+            signUpButton.isEnabled = true
+        }
+        else {
+            signUpButton.backgroundColor = UIColor.rbg(red: 149, green: 204, blue: 244)
+            signUpButton.isEnabled = false
+        }
+    }
     
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
@@ -140,7 +151,9 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         // make sure all the data at least has something in it
         guard let email = emailTextField.text, email.characters.count > 0 else {return}
-        guard let username = usernameTextField.text, username.characters.count > 0 else {return}
+        guard let userName = usernameTextField.text, userName.characters.count > 0 else {return}
+        guard let name = nameTextField.text, name.characters.count > 0 else {return}
+        guard let phone = phoneTextField.text, phone.characters.count > 0 else {return}
         guard let password = passwordTextField.text, password.characters.count > 0 else {return}
         
         // try to creat a user with email and password
@@ -178,7 +191,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 guard let uid = user?.uid else {return}
                 
-                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl]
+                let dictionaryValues = ["userName": userName, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "Name":name]
                 let values = [uid: dictionaryValues]
                 
                 // this will add the information to the database with a dictionary of
@@ -218,7 +231,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     fileprivate func setupInputFields() {
         
-        let stackView  = UIStackView(arrangedSubviews: [emailTextField, usernameTextField, passwordTextField, signUpButton])
+        let stackView  = UIStackView(arrangedSubviews: [emailTextField, usernameTextField, nameTextField, phoneTextField, passwordTextField, signUpButton])
         
         view.addSubview(stackView)
         
@@ -226,7 +239,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         stackView.axis = .vertical
         stackView.spacing = 10
         
-        stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, widthConstant: 0, heightConstant: 200)
+        stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, widthConstant: 0, heightConstant: 250)
         
     }
     
