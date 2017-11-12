@@ -62,6 +62,9 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
     
     func fetchUserSoundSets() {
         soundSets.removeAll()
+        filteredSoundSets.removeAll()
+        self.collectionView?.reloadData()
+        
         //our Sound Sets
         let uid = FIRAuth.auth()?.currentUser?.uid ?? ""
         FIRDatabase.database().reference().child("soundSets").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -165,6 +168,7 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
     func fetchUserUpdatedSoundSets(_ updated: Bool) {
         if(updated) {
             self.fetchUserSoundSets()
+            
         } else {
             filteredSoundSets = soundSets
             self.collectionView?.reloadData()
