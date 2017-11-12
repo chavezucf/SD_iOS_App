@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+let dbUID: String = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
+var userUID: String!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

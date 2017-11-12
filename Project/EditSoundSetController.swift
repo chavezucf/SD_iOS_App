@@ -1,6 +1,6 @@
 //
-//  TeacherAddModuleController2.swift
-//  Testly.moc1
+//  EditSoundSetController.swift
+//  Project
 //
 //  Created by Miguel Chavez on 5/9/17.
 //  Copyright © 2017 Miguel Chavez. All rights reserved.

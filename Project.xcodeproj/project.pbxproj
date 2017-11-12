@@ -47,6 +47,7 @@
 		CFBDB5161F48AA1D002E992C /* SelectSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDB5141F48AA1D002E992C /* SelectSoundCell.swift */; };
 		CFBDB5171F48AA1D002E992C /* SelectSoundHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDB5151F48AA1D002E992C /* SelectSoundHeaderFooter.swift */; };
 		CFBDB5391F54DED7002E992C /* Drum1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CFBDB5381F54DED7002E992C /* Drum1.mp3 */; };
+		CFD2BCBE1FB8C8310097BE4D /* PlaySounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD2BCBD1FB8C8310097BE4D /* PlaySounds.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		CFBDB5141F48AA1D002E992C /* SelectSoundCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSoundCell.swift; sourceTree = "<group>"; };
 		CFBDB5151F48AA1D002E992C /* SelectSoundHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSoundHeaderFooter.swift; sourceTree = "<group>"; };
 		CFBDB5381F54DED7002E992C /* Drum1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Drum1.mp3; sourceTree = "<group>"; };
+		CFD2BCBD1FB8C8310097BE4D /* PlaySounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySounds.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			children = (
 				CF0FA1B71F1A6D78003AD8DE /* CustomImageView.swift */,
 				CF0FA1B91F1A6E0A003AD8DE /* Extensions.swift */,
+				CFD2BCBD1FB8C8310097BE4D /* PlaySounds.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				CF7799D81F3F54E500161450 /* EditSoundSetCell.swift in Sources */,
 				CF0FA1A71F1A6C18003AD8DE /* LoginController.swift in Sources */,
 				CF3E17211F5AE0460029D93E /* SoundSetNavBar.swift in Sources */,
+				CFD2BCBE1FB8C8310097BE4D /* PlaySounds.swift in Sources */,
 				CF3E17231F5AE3DB0029D93E /* SoundModel.swift in Sources */,
 				CFBDB50B1F488CA3002E992C /* DismissalAnimator.swift in Sources */,
 				CF0FA1C21F1A8CEE003AD8DE /* TestBluetoothController.swift in Sources */,

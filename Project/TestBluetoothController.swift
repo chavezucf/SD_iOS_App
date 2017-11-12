@@ -14,6 +14,10 @@ import Foundation
 
 class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
+    var sounds: [String:Any] = ["sound3":"-KwQlItbXWsYqMoXCg1M",
+    "sound2":"-Mis-PoxaYKucCNKRMil",
+    "sound1":"-Kxw-VcxaYMhyCNKRitl"]
+    
     var centralManager:CBCentralManager!
     var peripheral:CBPeripheral!
     var characteristic:CBCharacteristic!
@@ -180,20 +184,9 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     }
     
     func sound(sender: UIButton) {
-        let value:String = "8\n"
-        let data = value.data(using: String.Encoding.utf8)
-        self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
-        write(sound: "0\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mop-PoxaMcurCNKXSyt")//Boing
-        write(sound: "1\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mis-PoxaYKucCNKRMil")//Blurp
-        write(sound: "2\n", uid:"MgaK3AHac7PYSasKUpJuaUJKdgl1", sid: "-KwQlItbXWsYqMoXCg1M")//Bloop
-        write(sound: "3\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mop-PoxaMcurCNKXSyt")//Boing
-        write(sound: "4\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mis-PoxaYKucCNKRMil")//Blurp
-        write(sound: "5\n", uid:"MgaK3AHac7PYSasKUpJuaUJKdgl1", sid: "-KwQlItbXWsYqMoXCg1M")//Bloop
-        write(sound: "6\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Mop-PoxaMcurCNKXSyt")//Boing
-        write(sound: "7\n", uid:"UV6wmc4v6LQ96YoBpHZIJeMQUzD3", sid: "-Kxw-VcxaYMhyCNKRitl")//Chomp
+        sendSounds(sounds: sounds)
     }
     func write(sound:String, uid:String, sid:String) {
-        
         addToLog(sound)
         let uid = uid
         let sid = sid
@@ -245,12 +238,6 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         }
     }
     
-    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            completion(data, response, error)
-            }.resume()
-    }
-    
     func startScan(sender: UIButton) {
         if(!self.bluetoothOn){
             addToLog("Bluetooth is Off")
@@ -258,6 +245,10 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         }
         self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
         addToLog("Scan")
+        for sound in sounds {
+            print(sound)
+        }
+        
     }
     
     
@@ -305,8 +296,34 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                 addToLog("WE ARE HERE!")
                 self.characteristic = thisCharacteristic
                 //set up notifications
+                
             }
         }
+    }
+    
+    func sendSounds(sounds: [String:Any]){
+        let count = sounds.count
+        let value:String = String(count) + "\n"
+        let data = value.data(using: String.Encoding.utf8)
+        self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+        print(value)
+        for sound in sounds {
+            let keyStr = sound.key
+            let index = keyStr.characters.index(keyStr.startIndex, offsetBy: 5)
+            var uid:String?
+            let sid:String = sound.value as! String
+            if(dbUser?.soundsDictionary[sid] != nil){
+                uid = dbUID
+            }else {
+                uid = userUID
+            }
+            print("Index: " + String(keyStr[index]))
+            print("     sid: " + sid)
+            print("     uid: " + uid!)
+            write(sound: String(keyStr[index]), uid: uid!, sid: sid)
+            
+        }
+        
     }
 
     

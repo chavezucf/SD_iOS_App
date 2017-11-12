@@ -89,6 +89,7 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
     func fetchUser() {
         //our Sound Sets
         let uid = FIRAuth.auth()?.currentUser?.uid ?? ""
+        userUID = uid
         FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             
             guard let userDictionary = snapshot.value as? [String: Any] else { return }
@@ -99,7 +100,7 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
         }
     }
     func fetchDBUser() {
-        let uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
+        let uid = dbUID
         FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             
             guard let userDictionary = snapshot.value as? [String: Any] else { return }

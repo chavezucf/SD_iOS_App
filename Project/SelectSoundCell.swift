@@ -44,22 +44,38 @@ class SelectSoundCell: UICollectionViewCell {
     var playerLayer: AVPlayerLayer?
     var player: AVPlayer?
     
-    @IBAction func play(sender: UIButton)  {
-        guard let uid = self.uid else {return}
+    @IBAction func play(sender: UIButton){
+        var uid = dbUID
         guard let sid = self.sid else {return}
         FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let musicURL = String(describing: snapshot.value!)
-            print(musicURL)
-            if let url = URL(string: musicURL) {
-                let player = AVPlayer(url: url)
-                player.play()
-                print("Playing")
-                self.playerLayer = AVPlayerLayer(player: player)
-            }
-            
+        
+        let musicURL = String(describing: snapshot.value!)
+        print(musicURL)
+        if let url = URL(string: musicURL) {
+        let player = AVPlayer(url: url)
+        player.play()
+        print("Playing")
+        self.playerLayer = AVPlayerLayer(player: player)
+        }
+        
         }) { (err) in
-            print("Failed to fetch user", err)
+        print("Failed to fetch user", err)
+        }
+        
+        uid = userUID
+        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+        
+        let musicURL = String(describing: snapshot.value!)
+        print(musicURL)
+        if let url = URL(string: musicURL) {
+        let player = AVPlayer(url: url)
+        player.play()
+        print("Playing")
+        self.playerLayer = AVPlayerLayer(player: player)
+        }
+        
+        }) { (err) in
+        print("Failed to fetch user", err)
         }
     }
     

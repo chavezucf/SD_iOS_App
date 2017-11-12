@@ -1,6 +1,6 @@
 //
-//  AddCell3.swift
-//  Testly.moc1
+//  EditSoundSetCell.swift
+//  Project
 //
 //  Created by Miguel Chavez on 5/9/17.
 //  Copyright © 2017 Miguel Chavez. All rights reserved.
@@ -59,39 +59,42 @@ class EditSoundSetCell: UICollectionViewCell {
     var player: AVPlayer?
     
     @IBAction func play(sender: UIButton)  {
-        var uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
-        guard let sid = self.sid else {return}
-        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let musicURL = String(describing: snapshot.value!)
-            print(musicURL)
-            if let url = URL(string: musicURL) {
-                let player = AVPlayer(url: url)
-                player.play()
-                print("Playing")
-                self.playerLayer = AVPlayerLayer(player: player)
-            }
-        
-        }) { (err) in
-            print("Failed to fetch user", err)
-        }
-        
-        uid = "UV6wmc4v6LQ96YoBpHZIJeMQUzD3"
-        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let musicURL = String(describing: snapshot.value!)
-            print(musicURL)
-            if let url = URL(string: musicURL) {
-                let player = AVPlayer(url: url)
-                player.play()
-                print("Playing")
-                self.playerLayer = AVPlayerLayer(player: player)
-            }
-            
-        }) { (err) in
-            print("Failed to fetch user", err)
-        }
-        
+        /*guard let sid = self.sid else {return}
+        playerLayer = playSound(sid: sid)
+        */
+         var uid = dbUID
+         guard let sid = self.sid else {return}
+         FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+         
+         let musicURL = String(describing: snapshot.value!)
+         print(musicURL)
+         if let url = URL(string: musicURL) {
+         let player = AVPlayer(url: url)
+         player.play()
+         print("Playing")
+         self.playerLayer = AVPlayerLayer(player: player)
+         }
+         
+         }) { (err) in
+         print("Failed to fetch user", err)
+         }
+         
+         uid = userUID
+         FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+         
+         let musicURL = String(describing: snapshot.value!)
+         print(musicURL)
+         if let url = URL(string: musicURL) {
+         let player = AVPlayer(url: url)
+         player.play()
+         print("Playing")
+         self.playerLayer = AVPlayerLayer(player: player)
+         }
+         
+         }) { (err) in
+         print("Failed to fetch user", err)
+         }
+ 
     }
     
   
