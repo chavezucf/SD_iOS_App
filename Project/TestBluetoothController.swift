@@ -14,18 +14,18 @@ import Foundation
 
 class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
-    var sounds: [String:Any] = ["sound3":"-KwQlItbXWsYqMoXCg1M",
-    "sound2":"-Mis-PoxaYKucCNKRMil",
-    "sound1":"-Kxw-VcxaYMhyCNKRitl"]
+    var sounds: [String:Any] = ["sound1":"-Kxw-VcxaYMhyCNKRitl"]
     
     var centralManager:CBCentralManager!
     var peripheral:CBPeripheral!
     var characteristic:CBCharacteristic!
     var bluetoothOn:Bool!
-    let ourUUIDs: [CBUUID] = [CBUUID(string: "FFE0")]
-    let serviceUUID = CBUUID(string: "FFE0")
-    let characteristicUUID = CBUUID(string: "FFE1")
-    
+    //let ourUUIDs: [CBUUID] = [CBUUID(string: "FFE0")]
+    //let serviceUUID = CBUUID(string: "FFE0")
+    //let characteristicUUID = CBUUID(string: "FFE1")
+    let ourUUIDs: [CBUUID] = [CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")]
+    let serviceUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
+    let characteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
     
     let scanButton: UIButton = {
         let button = UIButton()
@@ -191,9 +191,8 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         let uid = uid
         let sid = sid
         var soundUrl: String = ""
+    FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
         
-        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-            
             soundUrl = String(describing: snapshot.value!)
             self.addToLog(soundUrl)
             
@@ -205,10 +204,11 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                 }
                 guard let soundData = data else { return }
                 
-                var value:String = sound
+                var value:String = sound + "\n"
+                print(value)
                 var data = value.data(using: String.Encoding.utf8)
                 self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
-                
+
                 soundData.withUnsafeBytes { (u8Ptr: UnsafePointer<UInt8>) in
                     let mutRawPointer = UnsafeMutableRawPointer(mutating: u8Ptr)
                     let totalSize = soundData.count
@@ -216,10 +216,11 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                     
                     while offset < totalSize {
                         
-                        let chunkSize = 90
+                        let chunkSize = 20
                         let chunk = Data(bytesNoCopy: mutRawPointer+offset, count: chunkSize, deallocator: Data.Deallocator.none)
                         self.peripheral.writeValue(chunk, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                         offset += chunkSize
+                        usleep(5000)
                     }
                 }
                 
@@ -243,11 +244,13 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             addToLog("Bluetooth is Off")
             return
         }
-        self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
-        addToLog("Scan")
-        for sound in sounds {
-            print(sound)
+        if(peripheral == nil){
+            self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
+            addToLog("Scan")
+        } else {
+            sendSounds(sounds: sounds)
         }
+        
         
     }
     
@@ -296,6 +299,7 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                 addToLog("WE ARE HERE!")
                 self.characteristic = thisCharacteristic
                 //set up notifications
+                sendSounds(sounds: sounds)
                 
             }
         }
@@ -321,7 +325,6 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             print("     sid: " + sid)
             print("     uid: " + uid!)
             write(sound: String(keyStr[index]), uid: uid!, sid: sid)
-            
         }
         
     }
