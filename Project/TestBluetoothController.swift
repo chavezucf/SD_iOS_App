@@ -326,6 +326,9 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             print("     uid: " + uid!)
             write(sound: String(keyStr[index]), uid: uid!, sid: sid)
         }
+        /*while(true){
+            print("123")
+        }*/
         
     }
 

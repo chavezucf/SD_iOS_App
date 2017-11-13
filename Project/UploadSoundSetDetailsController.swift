@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import CoreBluetooth
 
-class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     let cellID = "cellID"
     
@@ -28,6 +29,9 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
         
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        
+        self.bluetoothOn = false;
+        centralManager = CBCentralManager(delegate: self, queue: nil)
         
         collectionView?.register(UploadSoundSetDetailsHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         
@@ -105,5 +109,169 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
         return sounds?[soundKey] as! String
     }
     
+    /* CODE FOR BLUETOOTH */
+    var centralManager:CBCentralManager!
+    var peripheral:CBPeripheral!
+    var characteristic:CBCharacteristic!
+    var bluetoothOn:Bool!
+    let ourUUIDs: [CBUUID] = [CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")]
+    let serviceUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
+    let characteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
+    
+    func write(sound:String, uid:String, sid:String) {
+        
+        let uid = uid
+        let sid = sid
+        var soundUrl: String = ""
+        FIRDatabase.database().reference().child("sounds").child(uid).child(sid).child("soundUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            soundUrl = String(describing: snapshot.value!)
+            
+            guard let url = URL(string: soundUrl) else { return }
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                if let err = err {
+                    print("Failed to fetch sound:", err)
+                    return
+                }
+                guard let soundData = data else { return }
+                
+                var value:String = sound + "\n"
+                print(value)
+                var data = value.data(using: String.Encoding.utf8)
+                self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                
+                soundData.withUnsafeBytes { (u8Ptr: UnsafePointer<UInt8>) in
+                    let mutRawPointer = UnsafeMutableRawPointer(mutating: u8Ptr)
+                    let totalSize = soundData.count
+                    var offset = 0
+                    
+                    while offset < totalSize {
+                        
+                        let chunkSize = 20
+                        let chunk = Data(bytesNoCopy: mutRawPointer+offset, count: chunkSize, deallocator: Data.Deallocator.none)
+                        self.peripheral.writeValue(chunk, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                        offset += chunkSize
+                        usleep(5000)
+                    }
+                }
+                
+                value = "\n"
+                data = value.data(using: String.Encoding.utf8)
+                self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+                print("done")
+                DispatchQueue.main.async {
+                }
+                }.resume()
+        }) { (err) in
+            print("Failed to fetch user", err)
+        }
+    }
+    
+    func startSend(sender: UIButton) {
+        if(!self.bluetoothOn){
+            print("Bluetooth is Off")
+            return
+        }
+        if(peripheral == nil){
+            print("scan")
+            self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
+        } else {
+            print("send")
+            sendSounds(sounds: sounds!)
+        }
+        
+        
+    }
+    
+    
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        print(advertisementData.count)
+        self.peripheral = peripheral
+        
+        self.centralManager.connect(peripheral, options: nil)
+        
+    }
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        print("Fail! :(")
+    }
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        print("Connected!")
+        peripheral.delegate = self
+        peripheral.discoverServices(nil)
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+        if((error) != nil){
+            print(String(describing: error))
+        }
+        for service in peripheral.services! {
+            let thisService = service as CBService
+            print(String(describing: thisService))
+            if service.uuid == serviceUUID {
+                peripheral.discoverCharacteristics(nil,for: thisService)
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service:CBService,
+                    error: Error?) {
+        if((error) != nil){
+            print(String(describing: error))
+        }
+        for characteristic in service.characteristics! {
+            let thisCharacteristic = characteristic as CBCharacteristic
+            if characteristic.uuid == characteristicUUID {
+                print("WE ARE HERE!")
+                self.characteristic = thisCharacteristic
+                sendSounds(sounds: sounds!)
+                
+            }
+        }
+    }
+    
+    func sendSounds(sounds: [String:Any]){
+        let count = sounds.count
+        let value:String = String(count) + "\n"
+        let data = value.data(using: String.Encoding.utf8)
+        self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+        print(value)
+        for sound in sounds {
+            let keyStr = sound.key
+            let index = keyStr.characters.index(keyStr.startIndex, offsetBy: 5)
+            var uid:String?
+            let sid:String = sound.value as! String
+            if(dbUser?.soundsDictionary[sid] != nil){
+                uid = dbUID
+            }else {
+                uid = userUID
+            }
+            print("Index: " + String(keyStr[index]))
+            print("     sid: " + sid)
+            print("     uid: " + uid!)
+            write(sound: String(keyStr[index]), uid: uid!, sid: sid)
+        }
+        
+    }
+    
+    
+    func peripheral(peripheral: CBPeripheral,didUpdateValueForCharacteristic characteristic: CBCharacteristic,
+                    error: Error?) {
+    }
+    
+    func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        central.scanForPeripherals(withServices: nil, options: nil)
+    }
+    
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == CBManagerState.poweredOn {
+            print("Bluetooth available")
+            self.bluetoothOn = true;
+            
+        } else {
+            print("Bluetooth not available.")
+            self.bluetoothOn = false;
+        }
+    }
 }
 
