@@ -117,9 +117,9 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
     let ourUUIDs: [CBUUID] = [CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")]
     let serviceUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
     let characteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
+    var cnt = 0
     
     func write(sound:String, uid:String, sid:String) {
-        
         let uid = uid
         let sid = sid
         var soundUrl: String = ""
@@ -160,9 +160,16 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
                 self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                 self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                 print("done")
+                usleep(100000)
+                self.cnt -= 1;
+                if(self.cnt == 0){
+                    self.centralManager.cancelPeripheralConnection(self.peripheral)
+                }
                 DispatchQueue.main.async {
                 }
                 }.resume()
+            
+            print("done")
         }) { (err) in
             print("Failed to fetch user", err)
         }
@@ -173,13 +180,12 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
             print("Bluetooth is Off")
             return
         }
-        if(peripheral == nil){
-            print("scan")
-            self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
-        } else {
-            print("send")
-            sendSounds(sounds: sounds!)
-        }
+        //if(peripheral == nil){
+        self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
+        print("Scan")
+        //} else {
+        //    sendSounds(sounds: sounds)
+        //}
         
         
     }
@@ -232,6 +238,7 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
     
     func sendSounds(sounds: [String:Any]){
         let count = sounds.count
+        cnt = count
         let value:String = String(count) + "\n"
         let data = value.data(using: String.Encoding.utf8)
         self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)

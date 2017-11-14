@@ -14,7 +14,7 @@ import Foundation
 
 class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
-    var sounds: [String:Any] = ["sound1":"-Kxw-VcxaYMhyCNKRitl"]
+    var sounds: [String:Any] = ["sound1":"-Kxw-VcxaYMhyCNKRitl","sound2":"-Kxw-VcxaYMhyCNKRitl"]
     
     var centralManager:CBCentralManager!
     var peripheral:CBPeripheral!
@@ -26,6 +26,7 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     let ourUUIDs: [CBUUID] = [CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")]
     let serviceUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
     let characteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
+    var cnt = 0;
     
     let scanButton: UIButton = {
         let button = UIButton()
@@ -229,6 +230,11 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                 self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                 self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
                 print("done")
+                usleep(100000)
+                self.cnt -= 1;
+                if(self.cnt == 0){
+                    self.centralManager.cancelPeripheralConnection(self.peripheral)
+                }
                 DispatchQueue.main.async {
                 }
             }.resume()
@@ -244,12 +250,12 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             addToLog("Bluetooth is Off")
             return
         }
-        if(peripheral == nil){
+        //if(peripheral == nil){
             self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
             addToLog("Scan")
-        } else {
-            sendSounds(sounds: sounds)
-        }
+        //} else {
+        //    sendSounds(sounds: sounds)
+        //}
         
         
     }
@@ -307,7 +313,9 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     
     func sendSounds(sounds: [String:Any]){
         let count = sounds.count
+        cnt = count
         let value:String = String(count) + "\n"
+        //let value:String = "H"
         let data = value.data(using: String.Encoding.utf8)
         self.peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
         print(value)
@@ -326,9 +334,6 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             print("     uid: " + uid!)
             write(sound: String(keyStr[index]), uid: uid!, sid: sid)
         }
-        /*while(true){
-            print("123")
-        }*/
         
     }
 
