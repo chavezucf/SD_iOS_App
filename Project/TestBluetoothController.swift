@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import CoreBluetooth
+import Lottie
 
 import Foundation
 
@@ -27,6 +28,8 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     let serviceUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
     let characteristicUUID = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
     var cnt = 0;
+    var pro: Float = 0.0
+    var increment: Float = 0.0
     
     let scanButton: UIButton = {
         let button = UIButton()
@@ -89,15 +92,18 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         return label
     }()
     
+    let loadingAnimation: LOTAnimationView = {
+        let AV = LOTAnimationView.animationNamed("glow_loading")
+        AV?.contentMode = .scaleAspectFill
+        AV?.loopAnimation = true
+        AV?.isHidden = true
+        return AV!
+    }()
     
-    let moduleImageView: UIImageView = {
-        let imageView = UIImageView()
-        var color = 0
-        imageView.layer.cornerRadius = 5
-        imageView.layer.masksToBounds = true
-        imageView.clipsToBounds = true
-        imageView.image = #imageLiteral(resourceName: "bluetooth")
-        return imageView
+    let progressView: UIProgressView = {
+        let pro = UIProgressView()
+        pro.progressTintColor = .red
+        return pro
     }()
     
     let logTextView: UITextView = {
@@ -123,7 +129,7 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         view.backgroundColor = UIColor.blue
         setupNavigationBarItemList()
         
-        view.addSubview(moduleImageView)
+        view.addSubview(progressView)
         view.addSubview(onButton)
         view.addSubview(offButton)
         view.addSubview(nameLabel)
@@ -136,12 +142,16 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         captionLabel.anchorCenterXToSuperview()
         captionLabel.anchor(top: nameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 400, heightConstant: 35)
         
-        moduleImageView.anchorCenterXToSuperview()
-        moduleImageView.anchor(top: captionLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 70, heightConstant: 70)
+        progressView.anchorCenterXToSuperview()
+        progressView.anchor(top: captionLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 270, heightConstant: 10)
         
         setupTestButtons()
         
         logTextView.anchor(top: onButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 30, paddingLeft: 40, paddingBottom: 30, paddingRight: 40, widthConstant: 0, heightConstant: 0)
+    
+        view.addSubview(loadingAnimation)
+        loadingAnimation.anchorCenterXToSuperview()
+        loadingAnimation.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 240)
     }
     
     fileprivate func setupNavigationBarItemList() {
@@ -167,14 +177,14 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
         stackView.axis = .horizontal
         stackView.spacing = 20
         
-        stackView.anchor(top: moduleImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 30, paddingBottom: 30, paddingRight: 30, widthConstant: 0, heightConstant: 80)
+        stackView.anchor(top: progressView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 30, paddingBottom: 30, paddingRight: 30, widthConstant: 0, heightConstant: 80)
     }
     
     func On(sender: UIButton) {
-        addToLog("on")
-        let value:String = "H"
-        let data = value.data(using: String.Encoding.utf8)
-        peripheral.writeValue(data!, for: self.characteristic, type: CBCharacteristicWriteType.withoutResponse)
+        
+        progressView.setProgress(pro, animated: false)
+        pro += 0.15
+        print(progressView.progress)
     }
     
     func Off(sender: UIButton) {
@@ -232,13 +242,15 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
                 print("done")
                 usleep(100000)
                 self.cnt -= 1;
+                self.pro += self.increment
                 if(self.cnt == 0){
+                    self.sending(false)
                     self.centralManager.cancelPeripheralConnection(self.peripheral)
                 }
                 DispatchQueue.main.async {
                 }
             }.resume()
-                
+                self.progressView.setProgress(self.pro, animated: true)
                 self.addToLog("done")
             }) { (err) in
                 print("Failed to fetch user", err)
@@ -250,14 +262,21 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
             addToLog("Bluetooth is Off")
             return
         }
-        //if(peripheral == nil){
-            self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
-            addToLog("Scan")
-        //} else {
-        //    sendSounds(sounds: sounds)
-        //}
+        self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
+        addToLog("Scan")
+        self.sending(true)
         
         
+    }
+    
+    func sending(_ isSending:Bool){
+        if(isSending){
+            loadingAnimation.isHidden = false
+            loadingAnimation.play()
+        } else {
+            loadingAnimation.isHidden = true
+            loadingAnimation.pause()
+        }
     }
     
     
@@ -314,6 +333,8 @@ class TestBluetoothController: UIViewController, CBCentralManagerDelegate, CBPer
     func sendSounds(sounds: [String:Any]){
         let count = sounds.count
         cnt = count
+        pro = 0;
+        increment = Float(100/count);
         let value:String = String(count) + "\n"
         //let value:String = "H"
         let data = value.data(using: String.Encoding.utf8)

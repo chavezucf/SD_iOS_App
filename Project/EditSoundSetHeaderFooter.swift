@@ -22,19 +22,20 @@ class EditSoundSetHeader: UICollectionViewCell {
     
     lazy var soundSetName: UITextField = {
         let tf = UITextField()
-        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        tf.backgroundColor =  UIColor(white: 0, alpha: 0.75)
         tf.font = UIFont.systemFont(ofSize: 18)
+        tf.textColor = .white ///PROMBLEM
         tf.layer.cornerRadius = 5
         tf.layer.masksToBounds = true
         tf.layer.borderWidth = 1
-        tf.layer.borderColor = UIColor.black.cgColor
+        tf.layer.borderColor = UIColor.rbg(red: 225, green: 0, blue: 45).cgColor
         tf.addTarget(self, action: #selector(saveToMasterview), for: .editingDidEnd)
         return tf
     }()
     
     let logoImageView: UIImageView = {
         let logo = UIImageView()
-        logo.image = #imageLiteral(resourceName: "music")
+        logo.image = #imageLiteral(resourceName: "music2")
         logo.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         logo.contentMode = .scaleAspectFit
         return logo
@@ -42,11 +43,11 @@ class EditSoundSetHeader: UICollectionViewCell {
     
     let headerContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor =  UIColor(white: 1, alpha: 0.5)
+        view.backgroundColor =  UIColor(white: 0, alpha: 0.75)
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderColor = UIColor.rbg(red: 225, green: 0, blue: 45).cgColor
         return view
     }()
     
@@ -83,14 +84,14 @@ class EditSoundSetFooter: UICollectionViewCell {
     var className: String?
     lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        button.backgroundColor = UIColor(white: 0, alpha: 0.75)
         button.setTitle("Save", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(handelSave), for: .touchUpInside)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderColor = UIColor.rbg(red: 225, green: 0, blue: 45).cgColor
         return button
     }()
     

@@ -88,8 +88,10 @@ class SettingListController: UICollectionViewController, UICollectionViewDelegat
     
     fileprivate func setupNavigationBarItemList() {
         let navBar = navigationController?.navigationBar
-        navBar?.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
+        navBar?.barTintColor = UIColor.rbg(red: 25, green: 25, blue: 25)
         navBar?.isTranslucent = false
+        let textAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "SoundSetMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(launchMenu))
         

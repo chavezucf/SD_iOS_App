@@ -27,13 +27,13 @@ class MenuHeader: UICollectionViewCell {
         let label = UILabel()
         label.text = "User123"
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = UIColor.black
+        label.textColor = UIColor.white
         return label
     }()
     
     let userImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "music")
+        imageView.image = #imageLiteral(resourceName: "music2")
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
@@ -43,7 +43,7 @@ class MenuHeader: UICollectionViewCell {
     override init (frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.rbg(red: 210, green: 210, blue: 210)
+        backgroundColor = UIColor.rbg(red: 10, green: 10, blue: 10)
         
         addSubview(userImageView)
         addSubview(textLabel)

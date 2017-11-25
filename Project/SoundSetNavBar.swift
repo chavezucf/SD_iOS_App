@@ -15,8 +15,8 @@ extension SoundSetController {
         
         let textAttributes = [NSForegroundColorAttributeName:UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
+        self.navigationController?.navigationBar.barTintColor = UIColor.rbg(red: 10, green: 10, blue: 10)
+    
         
         let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
         
@@ -32,7 +32,6 @@ extension SoundSetController {
         searchBar.anchor(top: navBar?.topAnchor, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, paddingTop: 0, paddingLeft: 50, paddingBottom: 8, paddingRight: 50, widthConstant: 0, heightConstant: 0)
         
     }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             filteredSoundSets = soundSets

@@ -47,7 +47,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        collectionView.backgroundColor = UIColor.rbg(red: 210, green: 210, blue: 210)
+        collectionView.backgroundColor = UIColor.rbg(red: 10, green: 10, blue: 10)
         
         collectionView.register(MenuHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         
@@ -59,7 +59,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         
         if let window = UIApplication.shared.keyWindow {
             
-            blackView.backgroundColor = UIColor(white: 0, alpha: 0.75)
+            blackView.backgroundColor = UIColor(white: 0.15, alpha: 0.5)
             
             blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
             

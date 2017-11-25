@@ -12,9 +12,11 @@ extension SelectSoundController{
     
      func setupNavigationBar() {
         let navBar = navigationController?.navigationBar
-        navBar?.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
+        navBar?.barTintColor = UIColor.rbg(red: 25, green: 25, blue: 25)
         navBar?.isTranslucent = false
-        navBar?.tintColor = UIColor.black
+        navBar?.tintColor = UIColor.white
+        let textAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         
         let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showSearchBar))
         

@@ -20,17 +20,17 @@ class SoundSetCell: UICollectionViewCell {
     
     let cellView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        view.backgroundColor = UIColor(white: 0, alpha: 0.75)
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderColor = UIColor.rbg(red: 225, green: 0, blue: 45).cgColor
         return view
     }()
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Sound Set"
-        label.textColor = UIColor.black
+        label.textColor = UIColor.white
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
@@ -38,14 +38,14 @@ class SoundSetCell: UICollectionViewCell {
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "1/12/2004 12:05"
-        label.textColor = UIColor.black
+        label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     
     let cellImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "music")
+        imageView.image = #imageLiteral(resourceName: "music2")
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true

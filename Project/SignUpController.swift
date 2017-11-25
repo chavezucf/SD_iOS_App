@@ -191,7 +191,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 guard let uid = user?.uid else {return}
                 
-                let dictionaryValues = ["userName": userName, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "Name":name]
+                let dictionaryValues = ["userName": userName, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "name":name]
                 let values = [uid: dictionaryValues]
                 
                 // this will add the information to the database with a dictionary of

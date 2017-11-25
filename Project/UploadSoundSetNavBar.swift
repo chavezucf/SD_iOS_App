@@ -29,6 +29,11 @@ extension UploadSoundSetController {
         navBar?.addSubview(searchBar)
         searchBar.anchor(top: navBar?.topAnchor, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, paddingTop: 0, paddingLeft: 50, paddingBottom: 8, paddingRight: 50, widthConstant: 0, heightConstant: 0)
         
+        navBar?.barTintColor = UIColor.rbg(red: 25, green: 25, blue: 25)
+        navBar?.isTranslucent = false
+        navBar?.tintColor = UIColor.white
+        
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

@@ -13,9 +13,11 @@ extension EditSoundSetController{
     
     func setupNavigationBarItemList() {
         let navBar = navigationController?.navigationBar
-        navBar?.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
+        navBar?.barTintColor = UIColor.rbg(red: 25, green: 25, blue: 25)
         navBar?.isTranslucent = false
-        navBar?.tintColor = UIColor.black
+        navBar?.tintColor = UIColor.red
+        let textAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "SoundSetMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
         let deleteButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDelete))

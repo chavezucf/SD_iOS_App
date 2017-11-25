@@ -29,7 +29,6 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         hideKeyboardWhenTappedAround()
         
         collectionView?.register(SoundSetCell.self, forCellWithReuseIdentifier: cellID)
