@@ -15,7 +15,7 @@ struct User {
     var name: String
     var phoneNumber: String
     var profileImageUrl: String
-    var userName: String
+    var username: String
     var soundsDictionary: [String:Any]
     var soundsArray = [Sound]()
     
@@ -24,7 +24,7 @@ struct User {
         self.name = dictionary["name"] as? String ?? ""
         self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
         self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
-        self.userName = dictionary["userName"] as? String ?? ""
+        self.username = dictionary["username"] as? String ?? ""
         self.soundsDictionary = dictionary["sounds"] as? [String:String] ?? [:]
         
         let keysSounds = Array(self.soundsDictionary.keys)

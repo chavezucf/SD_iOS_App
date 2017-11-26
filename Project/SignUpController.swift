@@ -151,7 +151,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         // make sure all the data at least has something in it
         guard let email = emailTextField.text, email.characters.count > 0 else {return}
-        guard let userName = usernameTextField.text, userName.characters.count > 0 else {return}
+        guard let username = usernameTextField.text, username.characters.count > 0 else {return}
         guard let name = nameTextField.text, name.characters.count > 0 else {return}
         guard let phone = phoneTextField.text, phone.characters.count > 0 else {return}
         guard let password = passwordTextField.text, password.characters.count > 0 else {return}
@@ -191,7 +191,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 guard let uid = user?.uid else {return}
                 
-                let dictionaryValues = ["userName": userName, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "Name":name]
+                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "Name":name]
                 let values = [uid: dictionaryValues]
                 
                 // this will add the information to the database with a dictionary of

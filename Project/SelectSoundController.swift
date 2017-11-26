@@ -161,10 +161,14 @@ class SelectSoundController: UICollectionViewController, UICollectionViewDelegat
             self.selectedItemSID = filteredSounds[indexPath.item].sid
             masterView?.sounds?["sound" + String(describing: channel!)] = self.selectedItemSID
             masterView?.collectionView?.reloadData()
+            //change is here
+            navigationController?.popViewController(animated: true)
         } else if indexPath.section == 1 {
             self.selectedItemSID = filteredDBSounds[indexPath.item].sid
             masterView?.sounds?["sound" + String(describing: channel!)] = self.selectedItemSID
             masterView?.collectionView?.reloadData()
+            //change is here
+            navigationController?.popViewController(animated: true)
         }
         collectionView.reloadData()
         

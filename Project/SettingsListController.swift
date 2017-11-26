@@ -48,7 +48,7 @@ class SettingListController: UICollectionViewController, UICollectionViewDelegat
     
     fileprivate func setupSettings() {
         self.settings[0].UserInput = (mainUser?.name)!
-        self.settings[1].UserInput = (mainUser?.userName)!
+        self.settings[1].UserInput = (mainUser?.username)!
         self.settings[2].UserInput = (mainUser?.phoneNumber)!
         self.settings[3].UserInput = (mainUser?.email)!
         
@@ -90,8 +90,8 @@ class SettingListController: UICollectionViewController, UICollectionViewDelegat
         let navBar = navigationController?.navigationBar
         navBar?.barTintColor = UIColor.rbg(red: 100, green: 100, blue: 100)
         navBar?.isTranslucent = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "SoundSetMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(launchMenu))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "logout").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(launchMenu))
         
          navigationItem.title = "Settings"
     }

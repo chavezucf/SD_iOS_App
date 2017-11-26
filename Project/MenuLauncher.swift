@@ -37,7 +37,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     let cellId = "cellId"
     
     let menuSelctions: [MenuSelection] = {
-        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Settings", imageName: "gearBlack"), MenuSelection(name: "Test Bluetooth", imageName: "logoff")]
+        return [MenuSelection(name: "Sound Sets", imageName: "music"), MenuSelection(name: "Upload", imageName: "bluetooth"), MenuSelection(name: "Settings", imageName: "gearBlack")]//, MenuSelection(name: "Test Bluetooth", imageName: "logoff")]
     }()
     
     
@@ -129,12 +129,13 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
                      navController = UINavigationController(rootViewController: myController)
                      */
                 }
-                else if(indexPath.item == 3)
+                // this is for test bluetooth
+                /*else if(indexPath.item == 3)
                 {
                      let myController = TestBluetoothController()
                      navController = UINavigationController(rootViewController: myController)
                 }
-             
+                */
                 rootViewController.present(navController, animated: true, completion: {
                     window.rootViewController = navController
                     
@@ -169,7 +170,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: indexPath) as! MenuHeader
-        header.userName = user?.userName
+        header.userName = user?.username
         return header
     }
     

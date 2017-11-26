@@ -1,14 +1,14 @@
 //
-//  TeacherAddModuleController2.swift
-//  Testly.moc1
+//  UploadSoundSetDetailsController.swift
+//  Project
 //
 //  Created by Miguel Chavez on 5/9/17.
 //  Copyright © 2017 Miguel Chavez. All rights reserved.
 //
-
 import UIKit
 import Firebase
 import CoreBluetooth
+//import Lottie
 
 class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CBCentralManagerDelegate, CBPeripheralDelegate {
     
@@ -21,6 +21,14 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
             
         }
     }
+    
+    /*let loadingAnimation: LOTAnimationView = {
+        let AV = LOTAnimationView.animationNamed("glow_loading")
+        AV?.contentMode = .scaleAspectFill
+        AV?.loopAnimation = true
+        AV?.isHidden = true
+        return AV!
+    }()*/
     
     var sounds:[String:Any]?
     var soundSetName:String?
@@ -45,6 +53,9 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
         
         collectionView?.alwaysBounceVertical = true
         
+        //view.addSubview(loadingAnimation)
+        //loadingAnimation.anchorCenterXToSuperview()
+        //loadingAnimation.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 240)
         
     }
     
@@ -163,6 +174,7 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
                 usleep(100000)
                 self.cnt -= 1;
                 if(self.cnt == 0){
+                    //self.sending(false)
                     self.centralManager.cancelPeripheralConnection(self.peripheral)
                 }
                 DispatchQueue.main.async {
@@ -180,15 +192,21 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
             print("Bluetooth is Off")
             return
         }
-        //if(peripheral == nil){
         self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
-        print("Scan")
-        //} else {
-        //    sendSounds(sounds: sounds)
-        //}
+        //self.sending(true)
         
         
     }
+    
+    /*func sending(_ isSending:Bool){
+        if(isSending){
+            loadingAnimation.isHidden = false
+            loadingAnimation.play()
+        } else {
+            loadingAnimation.isHidden = true
+            loadingAnimation.pause()
+        }
+    }*/
     
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
@@ -281,4 +299,3 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
         }
     }
 }
-
