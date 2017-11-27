@@ -41,7 +41,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width/2
         plusPhotoButton.layer.masksToBounds = true
-        plusPhotoButton.layer.borderColor = UIColor.black.cgColor
+        plusPhotoButton.layer.borderColor = UIColor.white.cgColor
         plusPhotoButton.layer.borderWidth = 3
         
         dismiss(animated: true, completion: nil)
@@ -51,10 +51,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     let emailTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Email"
-        tf.keyboardType = .emailAddress
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -62,9 +63,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     let usernameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Username"
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -72,9 +75,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -83,9 +88,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         let tf = UITextField()
         tf.placeholder = "Phone Number"
         tf.keyboardType = .phonePad
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -94,9 +101,11 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         let tf = UITextField()
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -144,7 +153,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     }()
     
     func handleAlreadyHaveAccount() {
-        _ = navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     func handleSignUp() {
@@ -191,7 +200,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                 
                 guard let uid = user?.uid else {return}
                 
-                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "Name":name]
+                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "phoneNumber": phone, "email":email, "name":name]
                 let values = [uid: dictionaryValues]
                 
                 // this will add the information to the database with a dictionary of
@@ -203,11 +212,14 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                     }
                     
                     print("Succ to save info in db")
-                    //guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else {return}
-                    //mainTabBarController.setupViewControllers()
-                   //self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
                 })
-                
+                /*
+                var test = FIRAuth.auth()?.currentUser?.prof
+                print(test)
+                FIRAuth.auth()?.currentUser?.profileChangeRequest().displayName = "test"
+                test = FIRAuth.auth()?.currentUser?.profileChangeRequest().displayName
+                print(test)*/
                 
             })
         })
@@ -216,7 +228,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "wood2")!)
         
         view.addSubview(plusPhotoButton)
         

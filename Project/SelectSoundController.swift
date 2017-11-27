@@ -70,6 +70,7 @@ class SelectSoundController: UICollectionViewController, UICollectionViewDelegat
         setupNavigationBar()
         
         collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .onDrag
         
         
     }
@@ -162,12 +163,16 @@ class SelectSoundController: UICollectionViewController, UICollectionViewDelegat
             masterView?.sounds?["sound" + String(describing: channel!)] = self.selectedItemSID
             masterView?.collectionView?.reloadData()
             //change is here
+            dismissKeyboard()
+            hideSearchBar()
             navigationController?.popViewController(animated: true)
         } else if indexPath.section == 1 {
             self.selectedItemSID = filteredDBSounds[indexPath.item].sid
             masterView?.sounds?["sound" + String(describing: channel!)] = self.selectedItemSID
             masterView?.collectionView?.reloadData()
             //change is here
+            dismissKeyboard()
+            hideSearchBar()
             navigationController?.popViewController(animated: true)
         }
         collectionView.reloadData()

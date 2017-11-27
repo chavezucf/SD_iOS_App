@@ -58,6 +58,8 @@ class SoundSetController: UICollectionViewController, UICollectionViewDelegateFl
         fetchUser()
         fetchDBUser()
         
+        collectionView?.keyboardDismissMode = .onDrag
+        
     }
     
     func fetchUserSoundSets() {

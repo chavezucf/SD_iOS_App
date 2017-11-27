@@ -17,11 +17,17 @@ class LoginController: UIViewController {
     let logoContainerView: UIView = {
         let view = UIView()
         
-        let logoImageView = UIImageView(image: #imageLiteral(resourceName: "logo"))
+        let logoImageView = UIImageView(image: #imageLiteral(resourceName: "music"))
         
         view.addSubview(logoImageView)
         logoImageView.anchorCenterSuperview()
-        view.backgroundColor = UIColor.rbg(red: 44, green: 95, blue: 255)
+        view.backgroundColor = UIColor(white: 1, alpha: 0.25)
+        
+        let separatorView1 = UIView()
+        separatorView1.backgroundColor = UIColor.black
+        
+        view.addSubview(separatorView1)
+        separatorView1.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 1.5)
         return view
     }()
     
@@ -29,10 +35,13 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "Email"
         tf.keyboardType = .emailAddress
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        
         return tf
     }()
     
@@ -51,9 +60,11 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
-        tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.layer.borderColor = UIColor.white.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
@@ -123,7 +134,7 @@ class LoginController: UIViewController {
         
         navigationController?.isNavigationBarHidden = true
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "wood2")!)
         
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 50)

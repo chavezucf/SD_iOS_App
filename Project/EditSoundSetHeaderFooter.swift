@@ -23,11 +23,17 @@ class EditSoundSetHeader: UICollectionViewCell {
     lazy var soundSetName: UITextField = {
         let tf = UITextField()
         tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        tf.font = UIFont.systemFont(ofSize: 18)
+        /*tf.font = UIFont.systemFont(ofSize: 18)
         tf.layer.cornerRadius = 5
         tf.layer.masksToBounds = true
         tf.layer.borderWidth = 1
+        tf.layer.borderColor = UIColor.black.cgColor*/
+        
+        tf.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        tf.borderStyle = .roundedRect
+        tf.font = UIFont.systemFont(ofSize: 18)
         tf.layer.borderColor = UIColor.black.cgColor
+        tf.layer.borderWidth = 1.5
         tf.addTarget(self, action: #selector(saveToMasterview), for: .editingDidEnd)
         return tf
     }()

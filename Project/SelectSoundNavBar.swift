@@ -57,7 +57,7 @@ extension SelectSoundController{
     
     func hideSearchBar() {
         searchBar.alpha = 0
-        dismissKeyboard()
+        searchBar.resignFirstResponder()
     }
     
     /*

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-let dbUID: String = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
+let dbUID: String = "1XWfDg7UwUWMMRCxlIV83g64l032"
 var userUID: String!
 
 @UIApplicationMain

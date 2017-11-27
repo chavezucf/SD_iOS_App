@@ -78,7 +78,7 @@ class UploadSoundSetController: UICollectionViewController, UICollectionViewDele
     func fetchDBSoundSets() {
         dbSoundSets.removeAll()
         //our Sound Sets
-        let uid = "MgaK3AHac7PYSasKUpJuaUJKdgl1"
+        let uid = dbUID
         FIRDatabase.database().reference().child("soundSets").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             
             guard let soundsetsDictionary = snapshot.value as? [String: Any] else { return }
