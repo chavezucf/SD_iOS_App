@@ -21,14 +21,81 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
             
         }
     }
-    
-    /*let loadingAnimation: LOTAnimationView = {
+    /*
+    let loadingAnimation: LOTAnimationView = {
         let AV = LOTAnimationView.animationNamed("glow_loading")
         AV?.contentMode = .scaleAspectFill
         AV?.loopAnimation = true
         AV?.isHidden = true
         return AV!
     }()*/
+    
+    let blurView: UIVisualEffectView = {
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.tag = 100
+        return blurView
+    }()
+    
+    let otherView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        let label = UILabel()
+        label.text = "Sending Bluetooth..."
+        label.textAlignment = .center
+        
+        
+        
+        view.addSubview(label)
+        label.anchorCenterXToSuperview()
+        label.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 200, heightConstant: 20)
+        view.tag = 200
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    func animateIn() {
+        super.viewDidLoad()
+        
+        otherView.transform = CGAffineTransform.init(scaleX: 1.3, y:1.3)
+        otherView.alpha = 0
+        blurView.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            
+            self.otherView.alpha = 1
+            self.otherView.transform = CGAffineTransform.identity
+            
+            self.blurView.alpha = 1
+            self.blurView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func animateOut() {
+        print("test")
+        UIView.animate(withDuration: 0.3, animations:{
+            self.otherView.transform = CGAffineTransform.init(scaleX: 1.3, y:1.3)
+            self.otherView.alpha = 0
+            self.blurView.alpha = 0
+        }){ (success:Bool) in
+            
+            self.blurView.removeFromSuperview()
+            self.otherView.removeFromSuperview()
+        }
+    }
+    
+    func Add() {
+        animateIn()
+        view.addSubview(blurView)
+        view.addSubview(otherView)
+        blurView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 0)
+        otherView.anchorCenterXToSuperview()
+        otherView.anchorCenterYToSuperview()
+        otherView.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 250, heightConstant: 100)
+    }
+    
+    
     
     var sounds:[String:Any]?
     var soundSetName:String?
@@ -56,6 +123,18 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
         //view.addSubview(loadingAnimation)
         //loadingAnimation.anchorCenterXToSuperview()
         //loadingAnimation.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 150, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, widthConstant: 0, heightConstant: 240)
+        
+        
+        view.addSubview(blurView)
+        view.addSubview(otherView)
+        if self.view.viewWithTag(100) != nil {
+            blurView.removeFromSuperview()
+        }
+        
+        if self.view.viewWithTag(200) != nil {
+            blurView.removeFromSuperview()
+            otherView.removeFromSuperview()
+        }
         
     }
     
@@ -174,7 +253,7 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
                 usleep(100000)
                 self.cnt -= 1;
                 if(self.cnt == 0){
-                    //self.sending(false)
+                    self.sending(false)
                     self.centralManager.cancelPeripheralConnection(self.peripheral)
                 }
                 DispatchQueue.main.async {
@@ -193,20 +272,26 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
             return
         }
         self.centralManager.scanForPeripherals(withServices: ourUUIDs, options: [CBCentralManagerScanOptionAllowDuplicatesKey : false])
-        //self.sending(true)
+        self.sending(true)
         
         
     }
     
-    /*func sending(_ isSending:Bool){
+    func sending(_ isSending:Bool){
         if(isSending){
-            loadingAnimation.isHidden = false
-            loadingAnimation.play()
+            //loadingAnimation.isHidden = false
+            //loadingAnimation.play()
+            //view.addSubview(loadingAnimation)
+            Add()
+
         } else {
-            loadingAnimation.isHidden = true
-            loadingAnimation.pause()
+            //loadingAnimation.isHidden = true
+            //loadingAnimation.pause()
+            //loadingAnimation.removeFromsuperview()
+            print("dicconect")
+            animateOut()
         }
-    }*/
+    }
     
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
