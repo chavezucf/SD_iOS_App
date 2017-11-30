@@ -30,6 +30,7 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
         return AV!
     }()*/
     
+    
     let blurView: UIVisualEffectView = {
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -253,10 +254,13 @@ class UploadSoundSetDeatilsController: UICollectionViewController, UICollectionV
                 usleep(100000)
                 self.cnt -= 1;
                 if(self.cnt == 0){
-                    self.sending(false)
+                    //self.sending(false)
                     self.centralManager.cancelPeripheralConnection(self.peripheral)
                 }
                 DispatchQueue.main.async {
+                    if(self.cnt == 0){
+                        self.sending(false)
+                    }
                 }
                 }.resume()
             
